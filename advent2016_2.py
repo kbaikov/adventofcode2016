@@ -76,9 +76,8 @@ def process_move(xstart, ystart, direction):
     elif direction == 'L':
         if x > -1:
             x -= 1
-        
-    return x, y, number_pad[(x, y)]
 
+    return x, y, number_pad[(x, y)]
 
 
 if __name__ == '__main__':

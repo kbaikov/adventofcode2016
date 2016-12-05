@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # http://adventofcode.com/2016
-from itertools import islice
 import logging as log
 log.basicConfig(level=log.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 

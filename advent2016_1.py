@@ -14,7 +14,7 @@ def location(xstart, ystart, turn, distance, current_direction):
     cur = next(c)
     while cur != current_direction:
         cur = next(c)
-    
+
     if turn == 'R':
         cur = next(c)
     elif turn == 'L':
@@ -29,7 +29,7 @@ def location(xstart, ystart, turn, distance, current_direction):
         x += distance
     elif cur == 'W':
         x -= distance
-    
+
     return x, y, cur
 
 
@@ -39,7 +39,7 @@ def location2(xstart, ystart, turn, distance, current_direction, visited):
     cur = next(c)
     while cur != current_direction:
         cur = next(c)
-    
+
     if turn == 'R':
         cur = next(c)
     elif turn == 'L':
@@ -70,7 +70,7 @@ def location2(xstart, ystart, turn, distance, current_direction, visited):
             if (x, y) in visited:
                 print(x, y)
             visited.append((x, y))
-    
+
     return x, y, cur, visited
 
 
