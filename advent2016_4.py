@@ -3,6 +3,7 @@
 import re
 from collections import Counter
 import logging as log
+import operator
 log.basicConfig(level=log.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
@@ -17,9 +18,10 @@ def partition_string(s):
 def is_real_room(room_string, checksum):
     c = Counter(room_string).most_common(5)
     least_value = c[-1][1]
-    least = [elem[0] for elem in c if elem[1] == least_value]
-    most = [elem[0] for elem in c if elem[1] > least_value]
-    most_common_string = ''.join(list(most) + sorted(least))
+    # sort reversed on the value and then by the key
+    sorted_c = sorted(c, key=lambda x: (-x[1], x[0]))
+    most_common_string = ''.join([elem[0] for elem in sorted_c])
+    log.debug('{} {} {}'.format(room_string, checksum, most_common_string))
     if most_common_string == checksum:
         return True
     else:
