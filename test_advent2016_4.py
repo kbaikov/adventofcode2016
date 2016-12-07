@@ -1,6 +1,7 @@
 import pytest
 
-from advent2016_4 import is_real_room, partition_string
+from advent2016_4 import caesar_cipher, is_real_room, partition_string
+
 
 @pytest.mark.parametrize("raw_string, expected", [
     ("aaaaa-bbb-z-y-x-123[abxyz]", ("aaaaabbbzyx", "123", "abxyz"),),
@@ -20,3 +21,10 @@ def test_partition_string(raw_string, expected):
 ])
 def test_is_real_room(room_string, checksum, expected):
     assert is_real_room(room_string, checksum) == expected
+
+
+@pytest.mark.parametrize("raw_string, expected", [
+    ("qzmt-zixmtkozy-ivhz-343[asdfg]", "very encrypted name")
+])
+def test_caesar_cipher(raw_string, expected):
+    assert caesar_cipher(raw_string) == expected

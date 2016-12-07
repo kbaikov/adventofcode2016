@@ -26,6 +26,32 @@ def is_real_room(room_string, checksum):
         return False
 
 
+def caesar_cipher(encrypted_string):
+    """from https://inventwithpython.com/chapter14.html"""
+    key = int(encrypted_string[-10: -7])
+    key = -key
+    decrypted = ""
+    for symbol in encrypted_string:
+        if symbol.isalpha():
+            num = ord(symbol)
+            num += key
+            if symbol.isupper():
+                if num > ord('Z'):
+                    num -= 26
+                elif num < ord('A'):
+                    num += 26
+            elif symbol.islower():
+                if num > ord('z'):
+                    num -= 26
+                elif num < ord('a'):
+                    num += 26
+
+            decrypted += chr(num)
+        else:
+            decrypted += symbol
+    return decrypted
+
+
 def sector_sum():
     with open('advent2016-4_input.txt') as file:
         sector_sum = 0
@@ -35,6 +61,7 @@ def sector_sum():
             if is_real_room(room_string, checksum):
                 sector_sum += int(sector_id)
     return sector_sum
+
 
 if __name__ == '__main__':
     print(sector_sum)
