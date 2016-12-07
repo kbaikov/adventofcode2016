@@ -16,7 +16,7 @@ def partition_string(s):
 
 
 def is_real_room(room_string, checksum):
-    c = Counter(room_string).most_common(10)
+    c = Counter(room_string).most_common(100)
     # sort reversed on the value and then by the key
     sorted_c = sorted(c, key=lambda x: (-x[1], x[0]))
     most_common_string = ''.join([elem[0] for elem in sorted_c])
@@ -27,13 +27,12 @@ def is_real_room(room_string, checksum):
 
 
 if __name__ == '__main__':
-    sector_sum = 0
     with open('advent2016-4_input.txt') as file:
+        sector_sum = 0
         for line in file:
             line = line.rstrip('\r\n')
             room_string, sector_id, checksum = partition_string(line)
             if is_real_room(room_string, checksum):
                 sector_sum += int(sector_id)
-            print(sector_sum)
+            print(sector_id, sector_sum)
             # log.debug('{}'.format(is_real_room(room_string, sector_id, checksum)))
-
