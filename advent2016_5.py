@@ -23,5 +23,26 @@ def find_pass(input):
     return password
 
 
+def find_pass_with_position(input):
+    l = len(input)
+    i = 0
+    password = [None for x in range(8)]
+    while not all(password):
+        input = '{}{}'.format(input[:l], i)
+        input_b = input.encode()
+        m = hashlib.md5(input_b)
+        h = m.hexdigest()
+        if h[:5] == '00000':
+            position = h[5]
+            character = h[6]
+            try:
+                if password[int(position)] == None: 
+                    password[int(position)] = character
+            except (IndexError, ValueError):
+                pass
+        i += 1
+    return ''.join(password)
+
+
 if __name__ == '__main__':
-    print(find_pass('cxdnnyjw'))
+    print(find_pass_with_position('cxdnnyjw'))
