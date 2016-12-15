@@ -87,4 +87,4 @@ if __name__ == '__main__':
         for line in file:
             for character in line:
                 x, y, num = process_move2(x, y, character)
-            log.debug('{}'.format(num))
+            log.debug(num)

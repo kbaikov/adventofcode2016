@@ -27,4 +27,4 @@ if __name__ == '__main__':
                 z.append(triangle(lines[0][1], lines[1][1], lines[2][1]))
                 z.append(triangle(lines[0][2], lines[1][2], lines[2][2]))
                 lines = []
-            log.debug('{}'.format(z.count(True)))
+            log.debug(z.count(True))
