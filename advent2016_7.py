@@ -13,7 +13,6 @@ def supports_tls(s):
     return False
 
 
-
 def has_abba(s):
     index = 0
     while index + 3 < len(s):
@@ -27,11 +26,13 @@ def has_abba(s):
 
 
 def abba_inside_square_brackets(s, abba):
-    index = s.find(abba)
-    if s[index - 1] == "[" and s[index + 4] == "]":
-        return True
-    else:
-        return False
+    import re
+    in_square = re.findall(r'\[(.*?)\]', s)
+    for sample in in_square:
+        if has_abba(sample)[0]:
+            return True
+    return False
+
 
 if __name__ == '__main__':
     results = []
@@ -39,6 +40,6 @@ if __name__ == '__main__':
         for line in file:
             line = line.rstrip('\r\n')
             results.append(supports_tls(line))
-            print(results.count(True))
+        print(results.count(True))
 
 
