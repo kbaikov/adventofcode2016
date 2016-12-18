@@ -8,7 +8,7 @@ log.basicConfig(level=log.DEBUG,
                 format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-grid = {(c, r): None for c in range(50) for r in range(6)}
+grid = {(c, r): '.' for c in range(50) for r in range(6)}
 
 
 def rect(x, y):
@@ -34,7 +34,7 @@ def rotate_row(row, rotation):
 def print_grid():
     for y in range(6):
         for x in range(50):
-            print(grid[x, y], end='\t')
+            print(grid[x, y], end=' ')
         print()
 
 
