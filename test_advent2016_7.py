@@ -1,6 +1,6 @@
 import pytest
 
-from advent2016_7 import supports_tls, has_abba, abba_inside_square_brackets
+from advent2016_7 import *
 
 
 @pytest.mark.parametrize("string, expected", [
@@ -31,3 +31,13 @@ def test_has_abba(string, expected):
 ])
 def test_abba_inside_square_brackets(string, match, expected):
     assert abba_inside_square_brackets(string, match) == expected
+
+
+@pytest.mark.parametrize("string, expected", [
+    ("aba[bab]xyz", True),
+    ("xyx[xyx]xyx", False),
+    ("aaa[kek]eke", True),
+    ("zazbz[bzb]cdb", True),
+])
+def test_supports_ssl(string, expected):
+    assert supports_ssl(string) == expected
