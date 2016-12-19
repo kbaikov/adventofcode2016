@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # http://adventofcode.com/2016
 
-from collections import Counter
+import re
 import logging as log
 log.basicConfig(level=log.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -14,13 +14,24 @@ def supports_tls(s):
 
 
 def supports_ssl(s):
-    if has_bab(s)[0]:
-        if bab_inside_square_brackets(s, has_bab(s)[1]):
-            return True
-    return False
+    in_square = re.findall(r'\[(.*?)\]', s)
+    for sample in in_square:
+        has, bab = has_bab(sample)
+        if has:
+            outside_square = re.findall(r"(.*?)(?:\[.*?\]|$)", s)
+            antibab = bab[1] + bab[0] + bab[1]
+            for sample in outside_square:
+                if antibab in sample:
+                    return True
+            return False
 
 
-def has_bab(s):
+def has_bab(s, pattern=None):
+    if pattern:
+        if pattern in s:
+            return True, pattern
+        else:
+            return False, None
     index = 0
     while index + 2 < len(s):
         if s[index] == s[index + 1]:
@@ -45,16 +56,15 @@ def has_abba(s):
 
 
 def bab_inside_square_brackets(s, bab):
-    import re
+    antipattern = bab[1] + bab[0] + bab[1]
     in_square = re.findall(r'\[(.*?)\]', s)
     for sample in in_square:
-        if has_bab(sample)[0]:
+        if has_bab(sample, pattern=antipattern)[0]:
             return True
     return False
 
 
 def abba_inside_square_brackets(s, abba):
-    import re
     in_square = re.findall(r'\[(.*?)\]', s)
     for sample in in_square:
         if has_abba(sample)[0]:
