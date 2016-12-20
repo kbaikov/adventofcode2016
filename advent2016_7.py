@@ -15,14 +15,15 @@ def supports_tls(s):
 
 def supports_ssl(s):
     in_square = re.findall(r'\[(.*?)\]', s)
-    for sample in in_square:
-        has, bab = has_bab(sample)
+    for samplein in in_square:
+        has, bab = has_bab(samplein)
         if has:
             outside_square = re.findall(r"(.*?)(?:\[.*?\]|$)", s)
             antibab = bab[1] + bab[0] + bab[1]
-            for sample in outside_square:
-                if antibab in sample:
+            for sampleout in outside_square:
+                if antibab in sampleout:
                     return True
+        else:
             return False
 
 
@@ -79,5 +80,3 @@ if __name__ == '__main__':
             line = line.rstrip('\r\n')
             results.append(supports_ssl(line))
         print(results.count(True))
-
-
