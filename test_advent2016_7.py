@@ -24,10 +24,10 @@ def test_has_abba(string, expected):
 
 
 @pytest.mark.parametrize("string, expected", [
-    ("aba", (True, 'aba')),
+    ("aba", (True, ['aba'])),
     ("aaaa", (False, None)),
-    ("aaba", (True, 'aba')),
-    ("ioxoj", (True, 'oxo')),
+    ("aaba", (True, ['aba'])),
+    ("ioxoj", (True, ['oxo'])),
 ])
 def test_has_bab(string, expected):
     assert has_bab(string) == expected

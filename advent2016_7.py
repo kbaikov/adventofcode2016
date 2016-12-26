@@ -3,7 +3,8 @@
 
 import re
 import logging as log
-log.basicConfig(level=log.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+log.basicConfig(level=log.DEBUG, 
+                format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def supports_tls(s):
@@ -14,17 +15,13 @@ def supports_tls(s):
 
 
 def supports_ssl(s):
-    in_square = re.findall(r'\[(.*?)\]', s)
-    for samplein in in_square:
-        has, bab = has_bab(samplein)
-        if has:
-            outside_square = re.findall(r"(.*?)(?:\[.*?\]|$)", s)
-            antibab = bab[1] + bab[0] + bab[1]
-            for sampleout in outside_square:
-                if antibab in sampleout:
-                    return True
-        else:
-            return False
+    has, bab = has_bab(s)
+    # antibab = bab[1] + bab[0] + bab[1]
+    if has:
+        for b in bab:
+            if bab_inside_square_brackets(s, b):
+                return True
+    return False
 
 
 def has_bab(s, pattern=None):
@@ -33,15 +30,18 @@ def has_bab(s, pattern=None):
             return True, pattern
         else:
             return False, None
-    index = 0
-    while index + 2 < len(s):
-        if s[index] == s[index + 1]:
+    results = []
+    outside_square = re.findall(r"(.*?)(?:\[.*?\]|$)", s)
+    for sampleout in outside_square:
+        index = 0
+        while index + 2 < len(sampleout):
+            if sampleout[index] == sampleout[index + 2] and sampleout[index] != sampleout[index + 1]:
+                results.append(sampleout[index:index+3])
             index += 1
-            continue
-        if s[index] == s[index + 2] and s[index] != s[index + 1]:
-            return True, s[index:index+3]
-        index += 1
-    return False, None
+    if results:
+        return True, results
+    else:
+        return False, None
 
 
 def has_abba(s):
@@ -75,6 +75,7 @@ def abba_inside_square_brackets(s, abba):
 
 if __name__ == '__main__':
     results = []
+    # print(has_bab('aba'))
     with open('advent2016-7_input.txt') as file:
         for line in file:
             line = line.rstrip('\r\n')
