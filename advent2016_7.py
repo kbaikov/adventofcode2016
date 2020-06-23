@@ -3,8 +3,8 @@
 
 import re
 import logging as log
-log.basicConfig(level=log.DEBUG, 
-                format='%(asctime)s - %(levelname)s - %(message)s')
+
+log.basicConfig(level=log.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 def supports_tls(s):
@@ -35,8 +35,11 @@ def has_bab(s, pattern=None):
     for sampleout in outside_square:
         index = 0
         while index + 2 < len(sampleout):
-            if sampleout[index] == sampleout[index + 2] and sampleout[index] != sampleout[index + 1]:
-                results.append(sampleout[index:index+3])
+            if (
+                sampleout[index] == sampleout[index + 2]
+                and sampleout[index] != sampleout[index + 1]
+            ):
+                results.append(sampleout[index : index + 3])
             index += 1
     if results:
         return True, results
@@ -51,14 +54,14 @@ def has_abba(s):
             index += 1
             continue
         if s[index] == s[index + 3] and s[index + 1] == s[index + 2]:
-            return True, s[index:index+4]
+            return True, s[index : index + 4]
         index += 1
     return False, None
 
 
 def bab_inside_square_brackets(s, bab):
     antipattern = bab[1] + bab[0] + bab[1]
-    in_square = re.findall(r'\[(.*?)\]', s)
+    in_square = re.findall(r"\[(.*?)\]", s)
     for sample in in_square:
         if has_bab(sample, pattern=antipattern)[0]:
             return True
@@ -66,18 +69,18 @@ def bab_inside_square_brackets(s, bab):
 
 
 def abba_inside_square_brackets(s, abba):
-    in_square = re.findall(r'\[(.*?)\]', s)
+    in_square = re.findall(r"\[(.*?)\]", s)
     for sample in in_square:
         if has_abba(sample)[0]:
             return True
     return False
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     results = []
     # print(has_bab('aba'))
-    with open('advent2016-7_input.txt') as file:
+    with open("advent2016-7_input.txt") as file:
         for line in file:
-            line = line.rstrip('\r\n')
+            line = line.rstrip("\r\n")
             results.append(supports_ssl(line))
         print(results.count(True))

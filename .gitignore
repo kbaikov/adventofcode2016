@@ -69,3 +69,5 @@ target/
 .idea/modules.xml
 .idea/ten-tips-for-pythonic-code-jetbrains-webcast.iml
 .idea/vcs.xml
+
+.venv/

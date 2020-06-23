@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # http://adventofcode.com/2016
 import logging as log
-log.basicConfig(level=log.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+log.basicConfig(level=log.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 def triangle(a, b, c):
@@ -16,9 +17,9 @@ def triangle(a, b, c):
         return False
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     z = []
-    with open('advent2016-3_input.txt') as file:
+    with open("advent2016-3_input.txt") as file:
         lines = []
         for line in file:
             lines.append(line.split())
