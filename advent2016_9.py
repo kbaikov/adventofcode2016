@@ -2,22 +2,29 @@
 # http://adventofcode.com/2016
 
 from collections import deque
-import logging as log
-from pprint import pprint
-
-log.basicConfig(level=log.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+import re
 
 
 def unzipped(s):
-    pass
-
-
-def marker():
-    in_square = re.findall(r"\[(.*?)\]", s)
+    stack = deque()
+    pattern = re.compile(r"\((\d+)x(\d+)\)")  # digits x digits in brackets
+    current_position = 0
+    while True:
+        marker = pattern.search(s, current_position)
+        if not marker:
+            stack.append(s[current_position:])
+            break
+        start, end = marker.span()
+        length, _, multiplier = marker.group().strip("()").partition("x")
+        length = int(length)
+        multiplier = int(multiplier)
+        stack.append(s[current_position:start])
+        stack.append(s[end : end + length] * multiplier)
+        current_position = end + length
+    return "".join(stack)
 
 
 if __name__ == "__main__":
+
     with open("advent2016-9_input.txt") as file:
-        for line in file:
-            line = line.rstrip("\r\n")
-            print(unzipped("A(1x5)BC"))
+        print(len(unzipped(file.read().strip())))  # 107035
